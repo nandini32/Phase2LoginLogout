@@ -8,10 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-@WebServlet("/dashboard")
-public class Dashboard extends HttpServlet {
+@WebServlet("/logout")
+public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -19,18 +18,12 @@ public class Dashboard extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		HttpSession session = request.getSession();
+		request.getSession().invalidate();
 		
-		if(session.getAttribute("userName") != null && (session.getAttribute("userPass") != null)) {
-			out.println("<h2> Welcome " + session.getAttribute("userName"));
-			
-			out.println("<br /> You are now Logged in </h2>");
-			
-			out.println("<h3><a href = 'logout'>Logout</a></h3>");
-		}
-		else {
-			response.sendRedirect("Index.html");
-		}
+		out.println("<h3> You are now Logged out <br /></h3>");
+		
+		out.println("<a href = 'Index.html'>Login again</a>");
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
